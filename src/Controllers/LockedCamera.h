@@ -25,11 +25,6 @@ namespace Controller {
             float _angleX;
             float _angleY;
             float _mouseSpeed;
-
-            glm::vec3 _up;
-            glm::vec3 _right;
-            glm::vec3 _direction;
-            glm::vec3 _position;
     };
 
 }

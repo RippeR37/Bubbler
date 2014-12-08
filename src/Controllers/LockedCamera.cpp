@@ -29,7 +29,7 @@ namespace Controller {
     }
 
     void LockedCamera::update(double deltaTime) {
-        float distToBubble = 5.0f;
+        float distToBubble = 3.0f;
         glm::vec3 bubblePos = Model::States::get().gameplay->getPlayer().getPosition();
 
         bubblePos.z = -bubblePos.z;

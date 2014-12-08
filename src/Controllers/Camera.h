@@ -18,7 +18,17 @@ namespace Controller {
             virtual const glm::vec3& getPos3D() = 0;
             virtual const glm::mat4& getMatrix() = 0;
 
+            virtual const glm::vec3& getUp();
+            virtual const glm::vec3& getRight();
+            virtual const glm::vec3& getDirection();
+
+
         protected:
+            glm::vec3 _up;
+            glm::vec3 _right;
+            glm::vec3 _direction;
+            glm::vec3 _position;
+
             glm::mat4 _matrix;
     };
 
