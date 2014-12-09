@@ -99,6 +99,7 @@
     <ClInclude Include="..\src\Models\Aquarium.h" />
     <ClInclude Include="..\src\Models\Bubble.h" />
     <ClInclude Include="..\src\Models\Bubbles.h" />
+    <ClInclude Include="..\src\Models\CameraType.h" />
     <ClInclude Include="..\src\Models\Floor.h" />
     <ClInclude Include="..\src\Models\Direction.h" />
     <ClInclude Include="..\src\Models\Player.h" />

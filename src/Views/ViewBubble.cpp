@@ -29,12 +29,13 @@ namespace View {
 
     void ViewBubble::render(const Model::Bubble& bubble) {
         static Controller::State::Gameplay& gameplay = *Model::States::get().gameplay;
-        static Controller::LockedCamera& camera = gameplay.getLockedCamera();
+        static Controller::Camera& camera = gameplay.getCamera();
         static glm::vec3 translation;
         static glm::vec3 camPos;
         static glm::vec3 bubbleCenter;
 
-        camPos = gameplay.getCamera().getPos3D();
+        camera = gameplay.getCamera();
+        camPos = camera.getPos3D();
         translation = bubble.getPosition(); 
         bubbleCenter = translation + glm::vec3(bubble.getRadius());
 

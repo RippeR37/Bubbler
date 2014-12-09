@@ -1,13 +1,24 @@
 #include "Camera.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Controller {
 
-    Camera::Camera() : _matrix(glm::mat4(1.0f)) {
-
+    Camera::Camera() {
+        _matrix = glm::mat4(1.0f);
+        _projectionMatrix = glm::perspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
     }
 
     Camera::~Camera() {
 
+    }
+
+    const glm::mat4& Camera::getMatrix() const {
+        return _matrix;
+    }
+
+    const glm::mat4& Camera::getProjection() const {
+        return _projectionMatrix;
     }
 
     const glm::vec3& Camera::getUp() const {

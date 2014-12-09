@@ -12,6 +12,7 @@ namespace Model {
             ~Player();
 
             void update(double deltaTime);
+            void resetPosition();
 
         private:
             void checkBoundries();

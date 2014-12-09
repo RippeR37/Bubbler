@@ -21,6 +21,7 @@ namespace Model {
 
     void Bubble::setRadius(float radius) {
         _radius = radius;
+        _radiusOriginal = radius;
     }
 
     void Bubble::setPosition(const glm::vec3& position) {

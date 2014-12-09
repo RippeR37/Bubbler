@@ -25,6 +25,8 @@ namespace Model {
         protected:
             float _speed;
             float _radius;
+            float _radiusOriginal;
+
             glm::vec3 _position;
             glm::vec3 _color;
 

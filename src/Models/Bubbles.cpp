@@ -30,6 +30,9 @@ namespace Model {
             pos.y = pos.y + it->getSpeed() * static_cast<float>(deltaTime);
             it->setPosition(pos);
             
+            float originalRadius = it->_radiusOriginal;
+            it->_radius = originalRadius * (1.0f + 0.1f * (it->getPosition().y / static_cast<float>((aquarium.getPosition().y + aquarium.getSize().y))));
+
             it->_distToCam = glm::distance(camPos, it->getPosition() + glm::vec3(it->getRadius()));
 
             if(pos.y > aquarium.getPosition().y + aquarium.getSize().y)

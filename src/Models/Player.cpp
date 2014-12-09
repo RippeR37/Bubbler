@@ -8,23 +8,29 @@
 namespace Model {
 
     Player::Player() : Bubble() {
-        setPosition(glm::vec3(2.5f, 2.5f, -1.0f));
+        resetPosition();
     }
 
     Player::~Player() {
 
     }
 
+    void Player::resetPosition() {
+        setPosition(glm::vec3(2.5f, 2.5f, 0.0f));
+    }
+
     void Player::update(double deltaTime) {
-        bool axisAligned = false;
+        bool axisAligned;
         glm::vec3 up;
         glm::vec3 right;
         glm::vec3 front;
 
+        axisAligned = (Model::States::get().gameplay->getCameraType() == Model::CameraType::Spectate);
+
         if(axisAligned) {
-            up    = glm::vec3(0.0f, 1.0f,  0.0f);
-            right = glm::vec3(1.0f, 0.0f,  0.0f);
-            front = glm::vec3(0.0f, 0.0f, -1.0f);
+            up    = glm::vec3( 0.0f, 1.0f,  0.0f);
+            right = glm::vec3( 0.0f, 0.0f, -1.0f);
+            front = glm::vec3(-1.0f, 0.0f,  0.0f);
         } else {
             up    = Model::States::get().gameplay->getCamera().getUp();
             right = Model::States::get().gameplay->getCamera().getRight();

@@ -10,7 +10,7 @@
 namespace Controller {
 
     State::Gameplay::Gameplay() : _camera(_lockedCamera) {
-        
+        _cameraType = Model::CameraType::Locked;
     }
 
     void State::Gameplay::update(double frameTime) {
@@ -18,18 +18,14 @@ namespace Controller {
 
         if(shouldSkip())
             return;
-
+        
         Util::TimeLoop::semiFixed(frameTime, timeStep, [&, this](double deltaTime) { 
-            _camera.update(deltaTime);
+            if(_cameraType == Model::CameraType::Locked)
+                _lockedCamera.update(deltaTime);
+            
             _player.update(deltaTime);
             _bubbles.update(deltaTime);
         });
-
-        if(glfwGetKey(Game::get().getWindow().getHandle(), GLFW_KEY_TAB) == GLFW_PRESS) {
-            _camera = _spectateCamera;
-        } else {
-            _camera = _lockedCamera;
-        }
 
         if(isEnd() == true)
             State::changeTo(Model::States::get().shutdown);
@@ -41,8 +37,7 @@ namespace Controller {
         
         bool playerRendered = false;
         Game::get().getWindow().getContext().clearBuffers(GL::Context::BufferMask::Color_Depth);
-
-        _pipeline.getStack().popMatrix();
+        
         _pipeline.getStack().pushMatrix(_camera.getMatrix());
             
             _viewFloor.render(_floor);
@@ -68,7 +63,9 @@ namespace Controller {
         changeTo(this);
 
         glfwSetCursorPos(Game::get().getWindow().getHandle(), 400.0, 300.0);
+
         glfwSetKeyCallback(Game::get().getWindow().getHandle(), handleKeyboard);
+        glfwSetScrollCallback(Game::get().getWindow().getHandle(), handleMouseScrolling);
         glfwSetCursorPosCallback(Game::get().getWindow().getHandle(), handleMouseMovement);
 
         // Depth testing
@@ -96,7 +93,9 @@ namespace Controller {
     }
 
     void State::Gameplay::onUnload() {
-        glfwSetKeyCallback(Game::get().getWindow().getHandle(), nullptr);
+        glfwSetKeyCallback(Game::get().getWindow().getHandle(),         nullptr);
+        glfwSetScrollCallback(Game::get().getWindow().getHandle(),      nullptr);
+        glfwSetCursorPosCallback(Game::get().getWindow().getHandle(),   nullptr);
     }
     
     Camera& State::Gameplay::getCamera() {
@@ -105,6 +104,10 @@ namespace Controller {
 
     LockedCamera& State::Gameplay::getLockedCamera() {
         return _lockedCamera;
+    }
+
+    SpectateCamera& State::Gameplay::getSpectateCamera() {
+        return _spectateCamera;
     }
 
     Model::Aquarium& State::Gameplay::getAquarium() {
@@ -119,6 +122,10 @@ namespace Controller {
         return _pipeline;
     }
 
+    Model::CameraType State::Gameplay::getCameraType() const {
+        return _cameraType;
+    }
+
     void State::Gameplay::handleKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods) {
         static State::Gameplay& thisState = *Model::States::get().gameplay;
 
@@ -128,12 +135,22 @@ namespace Controller {
                     thisState.changeTo(Model::States::get().shutdown);
                     break;
 
+                case GLFW_KEY_TAB:
+                    switch(Model::States::get().gameplay->_cameraType) {
+                        case Model::CameraType::Locked: 
+                            Model::States::get().gameplay->setCamera(Model::CameraType::Spectate);
+                            break;
+                        case Model::CameraType::Spectate: 
+                            Model::States::get().gameplay->setCamera(Model::CameraType::Locked);
+                            break;
+                    }
+                    break;
+
+                
                 default:
                     break;
             }
 
-        } else if(action == GLFW_RELEASE) {
-            
         }
 
         thisState.getCamera().updateKeyboard(key, scancode, action, mods);
@@ -153,8 +170,28 @@ namespace Controller {
         glfwSetCursorPos(window, centerX, centerY);
     }
     
-    void State::Gameplay::setCamera(Camera& camera) {
-        _camera = camera;
+    void State::Gameplay::handleMouseScrolling(GLFWwindow* window, double x, double y) {
+        Controller::State::Gameplay& thisState = *Model::States::get().gameplay;
+
+        if(thisState._cameraType == Model::CameraType::Locked)
+            Model::States::get().gameplay->getLockedCamera().updateMouseWheel(x, y);
+    }
+    
+    void State::Gameplay::setCamera(Model::CameraType cameraType) {
+        _cameraType = cameraType;
+
+        switch(cameraType) {
+            case Model::CameraType::Locked: 
+                _camera = getLockedCamera();
+                getLockedCamera().resetProjection();
+                _pipeline.setProjection(getLockedCamera().getProjection());
+                break;
+
+            case Model::CameraType::Spectate: 
+                _camera = getSpectateCamera();
+                _pipeline.setProjection(getSpectateCamera().getProjection());
+                break;
+        }
     }
 
     bool State::Gameplay::isEnd() const {

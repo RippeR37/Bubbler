@@ -22,6 +22,8 @@ namespace Controller {
 
         _speed = 1.0f;
         _mouseSpeed = 0.003f;
+
+        _fovAngle = 45.0f;
     }
 
     LockedCamera::~LockedCamera() {
@@ -54,6 +56,24 @@ namespace Controller {
         // This camera is not affected by keyboard
 
         return;
+    }
+
+    void LockedCamera::updateMouseWheel(double x, double y) {
+        _fovAngle += static_cast<float>(y) * 2.0f;
+
+        if(_fovAngle < 31.0f)
+            _fovAngle = 31.0f;
+
+        else if(_fovAngle > 121.0f)
+            _fovAngle = 121.0f;
+
+        resetProjection();
+    }
+
+    void LockedCamera::resetProjection() {
+        _projectionMatrix = glm::perspective(_fovAngle, 4.0f/3.0f, 0.1f, 100.0f);
+
+        Model::States::get().gameplay->getPipeline().setProjection(_projectionMatrix);
     }
 
     float LockedCamera::getAngleX() const {

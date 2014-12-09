@@ -18,6 +18,7 @@ namespace Controller {
             void update(double deltaTime);
             void updateMouse(double x, double y);
             void updateKeyboard(int key, int scancode, int action, int mods);
+            void updateMouseWheel(double x, double y);
 
             const glm::vec2  getPos2D() const;
             const glm::vec3& getPos3D() const;

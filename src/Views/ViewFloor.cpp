@@ -77,7 +77,38 @@ namespace View {
             vertices.push_back(glm::vec4(floor.getStartX(), 0.0f, y, 1.0f));
             vertices.push_back(glm::vec4(floor.getEndX(),   0.0f, y, 1.0f));
         }
+
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
         
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getEndY(),   1.0f));
+        
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getEndY(),   1.0f));
+        
+        vertices.push_back(glm::vec4(floor.getStartX(), 0.0f,                                floor.getStartY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
+
+        vertices.push_back(glm::vec4(floor.getEndX(),   0.0f,                                floor.getStartY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getStartY(), 1.0f));
+        
+        vertices.push_back(glm::vec4(floor.getStartX(), 0.0f,                                floor.getEndY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+
+        vertices.push_back(glm::vec4(floor.getEndX(),   0.0f,                                floor.getEndY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+        
+        vertices.push_back(glm::vec4(floor.getStartX(), 0.0f,                                floor.getEndY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+
+        vertices.push_back(glm::vec4(floor.getStartX(), floor.getEndX() - floor.getStartX(), floor.getEndY(), 1.0f));
+        vertices.push_back(glm::vec4(floor.getEndX(),   0.0f,                                floor.getEndY(), 1.0f));
+
+
         _drawCount = vertices.size();
 
         return vertices;

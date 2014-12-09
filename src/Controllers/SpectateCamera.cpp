@@ -21,7 +21,7 @@ namespace Controller {
     }
     
     void SpectateCamera::init(const Model::Aquarium& aquarium) {
-        _position.x = aquarium.getPosition().x + aquarium.getSize().x + 5.0f;
+        _position.x = aquarium.getPosition().x + aquarium.getSize().x + 7.5f;
         _position.y = aquarium.getPosition().y + aquarium.getSize().y + 2.5f;
         _position.z = aquarium.getPosition().z + aquarium.getSize().z * 0.5f;
 
@@ -50,6 +50,12 @@ namespace Controller {
     
     void SpectateCamera::updateKeyboard(int key, int scancode, int action, int mods) {
         // This camera is not affected by keyboard
+
+        return;
+    }
+
+    void SpectateCamera::updateMouseWheel(double x, double y) {
+        // This camera is not affected by mouse scrolling
 
         return;
     }

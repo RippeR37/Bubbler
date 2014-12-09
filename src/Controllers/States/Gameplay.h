@@ -9,6 +9,7 @@
 #include "../../Models/Aquarium.h"
 #include "../../Models/Player.h"
 #include "../../Models/Bubbles.h"
+#include "../../Models/CameraType.h"
 
 #include "../../Views/ViewFloor.h"
 #include "../../Views/ViewAquarium.h"
@@ -37,17 +38,20 @@ namespace Controller {
             Model::Aquarium& getAquarium();
             Model::Player& getPlayer();
             GL::Pipeline& getPipeline();
+            Model::CameraType getCameraType() const;
 
             static void handleKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods);
             static void handleMouseMovement(GLFWwindow* window, double x, double y);
+            static void handleMouseScrolling(GLFWwindow* window, double x, double y);
 
         private:
-            void setCamera(Camera& camera);
+            void setCamera(Model::CameraType cameraType);
             bool isEnd() const;
 
             Camera& _camera;
             LockedCamera _lockedCamera;
             SpectateCamera _spectateCamera;
+            Model::CameraType _cameraType;
             GL::Pipeline _pipeline;
 
         private:
