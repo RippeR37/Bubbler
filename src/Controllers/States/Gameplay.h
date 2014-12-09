@@ -3,10 +3,12 @@
 
 #include "../State.h"
 #include "../LockedCamera.h"
+#include "../SpectateCamera.h"
 
 #include "../../Models/Floor.h"
 #include "../../Models/Aquarium.h"
 #include "../../Models/Player.h"
+#include "../../Models/Bubbles.h"
 
 #include "../../Views/ViewFloor.h"
 #include "../../Views/ViewAquarium.h"
@@ -31,6 +33,7 @@ namespace Controller {
             
             Camera& getCamera();
             LockedCamera& getLockedCamera();
+            SpectateCamera& getSpectateCamera();
             Model::Aquarium& getAquarium();
             Model::Player& getPlayer();
             GL::Pipeline& getPipeline();
@@ -44,12 +47,14 @@ namespace Controller {
 
             Camera& _camera;
             LockedCamera _lockedCamera;
+            SpectateCamera _spectateCamera;
             GL::Pipeline _pipeline;
 
         private:
             Model::Floor _floor;
             Model::Aquarium _aquarium;
             Model::Player _player;
+            Model::Bubbles _bubbles;
 
         private:
             View::ViewFloor _viewFloor;

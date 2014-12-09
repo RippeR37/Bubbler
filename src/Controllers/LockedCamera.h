@@ -16,9 +16,11 @@ namespace Controller {
             void updateMouse(double x, double y);
             void updateKeyboard(int key, int scancode, int action, int mods);
 
-            const glm::vec2  getPos2D();
-            const glm::vec3& getPos3D();
-            const glm::mat4& getMatrix();
+            float getAngleX() const;
+            float getAngleY() const;
+            const glm::vec2  getPos2D() const;
+            const glm::vec3& getPos3D() const;
+            const glm::mat4& getMatrix() const;
 
         private:
             float _speed;

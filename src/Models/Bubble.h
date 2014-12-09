@@ -14,9 +14,11 @@ namespace Model {
             void setRadius(float radius);
             void setPosition(const glm::vec3& position);
             void setColor(const glm::vec3& color);
-
+            
+            bool isCollision(const Bubble& bubble) const;
             float getSpeed() const;
             float getRadius() const;
+            float getDistToCam() const;
             const glm::vec3& getPosition() const;
             const glm::vec3& getColor() const;
 
@@ -25,7 +27,12 @@ namespace Model {
             float _radius;
             glm::vec3 _position;
             glm::vec3 _color;
+
+        private:
+            float _distToCam;
             
+        public:
+            friend class Bubbles;
     };
     
 }

@@ -50,6 +50,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\Controllers\Camera.cpp" />
     <ClCompile Include="..\src\Controllers\LockedCamera.cpp" />
+    <ClCompile Include="..\src\Controllers\SpectateCamera.cpp" />
     <ClCompile Include="..\src\Controllers\State.cpp" />
     <ClCompile Include="..\src\Controllers\States\Gameplay.cpp" />
     <ClCompile Include="..\src\Controllers\States\Initialization.cpp" />
@@ -58,6 +59,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Models\Aquarium.cpp" />
     <ClCompile Include="..\src\Models\Bubble.cpp" />
+    <ClCompile Include="..\src\Models\Bubbles.cpp" />
     <ClCompile Include="..\src\Models\Floor.cpp" />
     <ClCompile Include="..\src\Models\Player.cpp" />
     <ClCompile Include="..\src\Models\States.cpp" />
@@ -88,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\Controllers\Camera.h" />
     <ClInclude Include="..\src\Controllers\LockedCamera.h" />
+    <ClInclude Include="..\src\Controllers\SpectateCamera.h" />
     <ClInclude Include="..\src\Controllers\State.h" />
     <ClInclude Include="..\src\Controllers\States\Gameplay.h" />
     <ClInclude Include="..\src\Controllers\States\Initialization.h" />

@@ -12,9 +12,6 @@
     <Filter Include="Header Files\Controllers">
       <UniqueIdentifier>{97786657-b2ba-4a1d-a516-b60dac2b5a54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Views">
-      <UniqueIdentifier>{6cc77a47-066c-4513-990a-74aa3374a160}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Models">
       <UniqueIdentifier>{124941cd-014a-474e-a2ce-6287b8f5d793}</UniqueIdentifier>
     </Filter>
@@ -65,6 +62,9 @@
     </Filter>
     <Filter Include="Assets\Shaders\Bubble">
       <UniqueIdentifier>{dd7d0924-d489-402c-a960-444ae17b6061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views">
+      <UniqueIdentifier>{6cc77a47-066c-4513-990a-74aa3374a160}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +174,12 @@
       <Filter>Source Files\Models</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Controllers\Camera.cpp">
+      <Filter>Source Files\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Models\Bubbles.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Controllers\SpectateCamera.cpp">
       <Filter>Source Files\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -293,6 +299,9 @@
       <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Controllers\Camera.h">
+      <Filter>Header Files\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Controllers\SpectateCamera.h">
       <Filter>Header Files\Controllers</Filter>
     </ClInclude>
   </ItemGroup>

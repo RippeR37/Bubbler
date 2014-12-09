@@ -6,7 +6,7 @@ namespace Model {
         _interval =  1.0f;
         _startX   =  0.0f;
         _startY   =  0.0f;
-        _endX     = 10.0f;
+        _endX     =  5.0f;
         _endY     = 10.0f;
     }
 

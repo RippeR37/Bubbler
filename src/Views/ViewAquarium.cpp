@@ -33,9 +33,7 @@ namespace View {
         static glm::mat4 matrixMVP;
 
         matrixMVP = Model::States::get().gameplay->getPipeline().getMVP();
-
-        camPos = Model::States::get().gameplay->getPlayer().getPosition(); 
-        camPos.z = -camPos.z;
+        camPos = Model::States::get().gameplay->getPlayer().getPosition();
         
         _program.use();
         _program["MVP"].setMatrix(matrixMVP);
@@ -84,50 +82,50 @@ namespace View {
 
         // Bottom
         vertices.push_back(glm::vec4(x,     y, z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
-        vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
         vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
+        vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
+        vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y, z + d, 1.0f));
 
         // Up
         vertices.push_back(glm::vec4(x,     y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+        vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
 
         // Left
         vertices.push_back(glm::vec4(x, y,     z,     1.0f));
-        vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
+        vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
+        vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
         vertices.push_back(glm::vec4(x, y + h, z + d, 1.0f));
         
         // Right
         vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
+        vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
+        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
         
         // Front
         vertices.push_back(glm::vec4(x,     y,     z, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
         vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
         vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
+        vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
+        vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z, 1.0f));
         
         // Back
         vertices.push_back(glm::vec4(x,     y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
+        vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
+        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
         vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
         
         _drawCount = vertices.size();

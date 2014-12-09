@@ -14,6 +14,7 @@ namespace Model {
             void update(double deltaTime);
 
         private:
+            void checkBoundries();
 
     };
 

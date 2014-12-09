@@ -10,15 +10,15 @@ namespace Controller {
 
     }
 
-    const glm::vec3& Camera::getUp() {
+    const glm::vec3& Camera::getUp() const {
         return _up;
     }
 
-    const glm::vec3& Camera::getRight() {
+    const glm::vec3& Camera::getRight() const {
         return _right;
     }
 
-    const glm::vec3& Camera::getDirection() {
+    const glm::vec3& Camera::getDirection() const {
         return _direction;
     }
 

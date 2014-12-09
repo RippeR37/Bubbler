@@ -22,7 +22,14 @@ namespace Controller {
         Util::TimeLoop::semiFixed(frameTime, timeStep, [&, this](double deltaTime) { 
             _camera.update(deltaTime);
             _player.update(deltaTime);
+            _bubbles.update(deltaTime);
         });
+
+        if(glfwGetKey(Game::get().getWindow().getHandle(), GLFW_KEY_TAB) == GLFW_PRESS) {
+            _camera = _spectateCamera;
+        } else {
+            _camera = _lockedCamera;
+        }
 
         if(isEnd() == true)
             State::changeTo(Model::States::get().shutdown);
@@ -31,15 +38,28 @@ namespace Controller {
     void State::Gameplay::render() {
         if(shouldSkip())
             return;
+        
+        bool playerRendered = false;
+        Game::get().getWindow().getContext().clearBuffers(GL::Context::BufferMask::Color_Depth);
 
-        Game::get().getWindow().getContext().clearBuffers(GL::Context::BufferMask::Color);
-
-        _pipeline.getStack().loadID();
+        _pipeline.getStack().popMatrix();
         _pipeline.getStack().pushMatrix(_camera.getMatrix());
-
+            
             _viewFloor.render(_floor);
             _viewAquarium.render(_aquarium);
-            _viewBubble.render(_player);
+            
+            glEnable(GL_DEPTH_TEST);
+                for(auto it = _bubbles.getBubbles().begin() ; it != _bubbles.getBubbles().end(); ++it) {
+                    if(playerRendered == false && it->getDistToCam() < 3.5f) {
+                        _viewBubble.render(_player);
+                        playerRendered = true;
+                    }
+                    _viewBubble.render(*it);
+                }
+
+                if(playerRendered == false)
+                    _viewBubble.render(_player);
+            glDisable(GL_DEPTH_TEST);
 
         _pipeline.getStack().popMatrix();
     }
@@ -50,6 +70,9 @@ namespace Controller {
         glfwSetCursorPos(Game::get().getWindow().getHandle(), 400.0, 300.0);
         glfwSetKeyCallback(Game::get().getWindow().getHandle(), handleKeyboard);
         glfwSetCursorPosCallback(Game::get().getWindow().getHandle(), handleMouseMovement);
+
+        // Depth testing
+        glDepthFunc(GL_LESS);
 
         // Face culling
         glEnable(GL_CULL_FACE);
@@ -68,6 +91,8 @@ namespace Controller {
 
         _player.setColor(glm::vec3(0.5f, 0.2f, 0.5f));
         _player.setRadius(0.25f);
+
+        _spectateCamera.init(_aquarium);
     }
 
     void State::Gameplay::onUnload() {

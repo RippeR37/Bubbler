@@ -1,5 +1,7 @@
 #include "Bubble.h"
 
+#include <glm/geometric.hpp>
+
 namespace Model {
 
     Bubble::Bubble() {
@@ -28,6 +30,19 @@ namespace Model {
     void Bubble::setColor(const glm::vec3& color) {
         _color = color;
     }
+    
+    bool Bubble::isCollision(const Bubble& bubble) const {
+        float r1 = getRadius();
+        float r2 = bubble.getRadius();
+
+        float distance = glm::distance(
+            getPosition() + glm::vec3(r1, r1, -r1), 
+            bubble.getPosition() + glm::vec3(r2, r2, -r2)
+        );
+
+        return distance < r1 + r2;
+    }
+
 
     float Bubble::getSpeed() const {
         return _speed;
@@ -35,6 +50,10 @@ namespace Model {
 
     float Bubble::getRadius() const {
         return _radius;
+    }
+    
+    float Bubble::getDistToCam() const {
+        return _distToCam;
     }
 
     const glm::vec3& Bubble::getPosition() const {

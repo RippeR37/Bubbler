@@ -2,6 +2,8 @@
 #include "../Game.h"
 #include "../Models/States.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <iostream>
 #include <cstdio>
 #include <vector>
@@ -27,10 +29,14 @@ namespace View {
 
     void ViewBubble::render(const Model::Bubble& bubble) {
         static Controller::State::Gameplay& gameplay = *Model::States::get().gameplay;
+        static Controller::LockedCamera& camera = gameplay.getLockedCamera();
         static glm::vec3 translation;
+        static glm::vec3 camPos;
+        static glm::vec3 bubbleCenter;
 
+        camPos = gameplay.getCamera().getPos3D();
         translation = bubble.getPosition(); 
-        translation.z = -translation.z;
+        bubbleCenter = translation + glm::vec3(bubble.getRadius());
 
         gameplay.getPipeline().getStack().pushMatrix();
 
@@ -40,8 +46,12 @@ namespace View {
             _program.use();
             _program["MVP"].setMatrix(gameplay.getPipeline().getMVP());
             _program["uColor"].setVec(bubble.getColor());
+            _program["uCamPos"].setVec(camPos);
+            _program["uBubbleCenter"].setVec(translation);
+            _program["uEyeDir"].setVec(camera.getDirection());
 
                 _vao.bind();
+                    glEnable(GL_CULL_FACE);
                     glDrawArrays(GL_TRIANGLES, 0, _drawCount);
                 _vao.unbind();
 

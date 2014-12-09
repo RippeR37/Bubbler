@@ -14,13 +14,13 @@ namespace Controller {
             virtual void updateMouse(double x, double y) = 0;
             virtual void updateKeyboard(int key, int scancode, int action, int mods) = 0;
 
-            virtual const glm::vec2  getPos2D() = 0;
-            virtual const glm::vec3& getPos3D() = 0;
-            virtual const glm::mat4& getMatrix() = 0;
+            virtual const glm::vec2  getPos2D() const = 0;
+            virtual const glm::vec3& getPos3D() const = 0;
+            virtual const glm::mat4& getMatrix() const = 0;
 
-            virtual const glm::vec3& getUp();
-            virtual const glm::vec3& getRight();
-            virtual const glm::vec3& getDirection();
+            virtual const glm::vec3& getUp() const;
+            virtual const glm::vec3& getRight() const;
+            virtual const glm::vec3& getDirection() const;
 
 
         protected:
