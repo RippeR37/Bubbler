@@ -86,9 +86,6 @@ namespace Controller {
         _viewAquarium.init(_aquarium);
         _viewBubble.init(_player);
 
-        _player.setColor(glm::vec3(0.5f, 0.2f, 0.5f));
-        _player.setRadius(0.25f);
-
         _spectateCamera.init(_aquarium);
     }
 
@@ -116,6 +113,10 @@ namespace Controller {
     
     Model::Player& State::Gameplay::getPlayer() {
         return _player;
+    }
+    
+    Model::Bubbles& State::Gameplay::getBubbles() {
+        return _bubbles;
     }
 
     GL::Pipeline& State::Gameplay::getPipeline() {

@@ -28,17 +28,31 @@ namespace View {
     }
 
     void ViewAquarium::render(const Model::Aquarium& aquarium) {
-        static glm::vec4 color = Model::States::get().gameplay->getAquarium().getColor();
+        static Controller::State::Gameplay& gameplay = *Model::States::get().gameplay;
+        static glm::vec4 color = gameplay.getAquarium().getColor();
         static glm::vec3 camPos;
         static glm::mat4 matrixMVP;
 
-        matrixMVP = Model::States::get().gameplay->getPipeline().getMVP();
-        camPos = Model::States::get().gameplay->getPlayer().getPosition();
+        matrixMVP = gameplay.getPipeline().getMVP();
+        camPos = gameplay.getPlayer().getPosition();
+
+        glm::vec3 lightbubblePosition[5];
+        int count = 0;
+        for(auto it = gameplay.getBubbles().getBubbles().begin(); it != gameplay.getBubbles().getBubbles().end(); ++it) {
+            if(it->isSpecial()) {
+                lightbubblePosition[count] = it->getPosition();
+                ++count;
+            }
+
+            if(count == 5) 
+                break;
+        }
         
         _program.use();
         _program["MVP"].setMatrix(matrixMVP);
         _program["CamPos"].setVec(camPos);
         _program["uColor"].setVec(color);
+        _program["lightbubblePosition"].setVec(lightbubblePosition[0], count);
 
             _vao.bind();
                 glDrawArrays(GL_TRIANGLES, 0, _drawCount);

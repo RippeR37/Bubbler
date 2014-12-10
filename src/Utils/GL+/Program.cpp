@@ -1,6 +1,8 @@
 #include "Program.h"
 #include "../File.h"
 
+#include <iostream>
+
 namespace GL {
 
     Program::Program() {
@@ -117,8 +119,12 @@ namespace GL {
                 stream >> uniformType;
                 stream >> uniformName;
 
+                // Semicolon
                 if(uniformName[uniformName.size()-1] == ';')
                     uniformName.erase(uniformName.size() - 1);
+
+                // Arrays
+                uniformName = uniformName.substr(0, uniformName.find_last_of("["));
 
                 _uniforms[uniformName] = Uniform(glGetUniformLocation(_programID, uniformName.c_str()));
             }

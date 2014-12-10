@@ -8,7 +8,7 @@
 namespace GL {
 
     Uniform::Uniform() {
-        _location = 0;
+        _location = -1;
     }
 
     Uniform::Uniform(GLuint location) {

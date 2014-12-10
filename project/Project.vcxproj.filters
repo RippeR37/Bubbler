@@ -182,6 +182,9 @@
     <ClCompile Include="..\src\Controllers\SpectateCamera.cpp">
       <Filter>Source Files\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Utils\GL+\VertexAttrib.cpp">
+      <Filter>Source Files\Utils\GL+</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -306,6 +309,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Models\CameraType.h">
       <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\GL+\VertexAttrib.h">
+      <Filter>Header Files\Utils\GL+</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Views\ExtendedView.h">
+      <Filter>Header Files\Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

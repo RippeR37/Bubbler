@@ -34,6 +34,18 @@ namespace View {
         static glm::vec3 camPos;
         static glm::vec3 bubbleCenter;
 
+        glm::vec3 lightbubblePosition[5];
+        int count = 0;
+        for(auto it = gameplay.getBubbles().getBubbles().begin(); it != gameplay.getBubbles().getBubbles().end(); ++it) {
+            if(it->isSpecial()) {
+                lightbubblePosition[count] = it->getPosition();
+                ++count;
+            }
+
+            if(count == 5) 
+                break;
+        }
+
         camera = gameplay.getCamera();
         camPos = camera.getPos3D();
         translation = bubble.getPosition(); 
@@ -50,6 +62,7 @@ namespace View {
             _program["uCamPos"].setVec(camPos);
             _program["uBubbleCenter"].setVec(translation);
             _program["uEyeDir"].setVec(camera.getDirection());
+            _program["lightbubblePosition"].setVec(lightbubblePosition[0], count);
 
                 _vao.bind();
                     glEnable(GL_CULL_FACE);

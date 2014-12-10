@@ -9,10 +9,15 @@ namespace Model {
         setRadius(1.0f);
         setPosition(glm::vec3(0.0f));
         setColor(glm::vec3(0.7f, 0.7f, 0.7f));
+        setSpecial(false);
     }
 
     Bubble::~Bubble() {
 
+    }
+
+    void Bubble::setSpecial(bool flag) {
+        _isSpecial = flag;
     }
 
     void Bubble::setSpeed(float speed) {
@@ -32,6 +37,10 @@ namespace Model {
         _color = color;
     }
     
+    bool Bubble::isSpecial() const {
+        return _isSpecial;
+    }
+
     bool Bubble::isCollision(const Bubble& bubble) const {
         float r1 = getRadius();
         float r2 = bubble.getRadius();

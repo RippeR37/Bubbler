@@ -9,6 +9,8 @@ namespace Model {
 
     Bubbles::Bubbles() {
         setMaxCount(10);
+        setSpecialsCount(0);
+        setMaxSpecialsCount(5);
     }
 
     Bubbles::~Bubbles() {
@@ -38,11 +40,17 @@ namespace Model {
             if(pos.y > aquarium.getPosition().y + aquarium.getSize().y)
                 shouldDelete = true;
 
-            if(shouldDelete)
+            if(shouldDelete) {
+                if(it->isSpecial())
+                    setSpecialsCount(getSpecialsCount() - 1);
                 it = _bubbles.erase(it);
-            else
+            } else {
                 ++it;
+            }
         }
+        
+        while(addSpecialsCount() > 0)
+            createSpecialBubble();
 
         while(addCount() > 0)
             createBubble();
@@ -56,6 +64,14 @@ namespace Model {
     void Bubbles::setMaxCount(unsigned int maxCount) {
         _maxCount = maxCount;
     }
+    
+    void Bubbles::setSpecialsCount(unsigned int specialsCount) {
+        _specialsCount = specialsCount;
+    }
+
+    void Bubbles::setMaxSpecialsCount(unsigned int maxSpecialsCount) {
+        _maxSpecialsCount = maxSpecialsCount;
+    }
             
     unsigned int Bubbles::getCount() const {
         return _bubbles.size();
@@ -63,6 +79,14 @@ namespace Model {
 
     unsigned int Bubbles::getMaxCount() const {
         return _maxCount;
+    }
+
+    unsigned int Bubbles::getSpecialsCount() const {
+        return _specialsCount;
+    }
+
+    unsigned int Bubbles::getMaxSpecialsCount() const {
+        return _maxSpecialsCount;
     }
 
     const std::list<Bubble>& Bubbles::getBubbles() const {
@@ -93,9 +117,41 @@ namespace Model {
 
         _bubbles.push_back(bubble);
     }
+    
+    void Bubbles::createSpecialBubble() {
+        Bubble bubble;
+        glm::vec3 position;
+        glm::vec3 color;
+        float radius;
+        float speed;
+        
+        // randomize data
+        radius = static_cast<float>(rand() % 250) / 1000.0f + 0.1f;
+        speed  = static_cast<float>(rand() % 500) /  350.0f + 0.2f;
+
+        position.x = static_cast<float>(rand() % 1000) / 200.0f;
+        position.y = 0.0f;
+        position.z = static_cast<float>(rand() % 1000) / 100.0f;
+
+        color = glm::vec3(0.7f, 0.3f, 0.3f);
+
+        bubble.setPosition(position);
+        bubble.setColor(color);
+        bubble.setRadius(radius);
+        bubble.setSpeed(speed);
+        bubble.setSpecial(true);
+
+        _bubbles.push_back(bubble);
+
+        setSpecialsCount(getSpecialsCount() + 1);
+    }
 
     unsigned int Bubbles::addCount() const {
         return getMaxCount() - getCount();
+    }
+    
+    unsigned int Bubbles::addSpecialsCount() const {
+        return getMaxSpecialsCount() - getSpecialsCount();
     }
 
 }

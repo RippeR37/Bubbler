@@ -9,12 +9,14 @@ namespace Model {
         public:
             Bubble();
             virtual ~Bubble();
-
+            
+            void setSpecial(bool flag);
             void setSpeed(float speed);
             void setRadius(float radius);
             void setPosition(const glm::vec3& position);
             void setColor(const glm::vec3& color);
             
+            bool isSpecial() const;
             bool isCollision(const Bubble& bubble) const;
             float getSpeed() const;
             float getRadius() const;
@@ -23,6 +25,7 @@ namespace Model {
             const glm::vec3& getColor() const;
 
         protected:
+            bool _isSpecial;
             float _speed;
             float _radius;
             float _radiusOriginal;

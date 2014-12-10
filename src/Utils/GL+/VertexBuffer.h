@@ -1,9 +1,12 @@
 #ifndef UTILS_GL_VERTEX_BUFFER_H_INCLUDED
 #define UTILS_GL_VERTEX_BUFFER_H_INCLUDED
 
+#include "VertexAttrib.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <list>
 #include <vector>
 
 namespace GL {
@@ -40,6 +43,18 @@ namespace GL {
             };
 
         public:
+            class Data {
+                public:
+                    Data() { }
+                    Data(GLvoid* data_, GLsizeiptr size_) :
+                        data(data), size(size_) { }
+
+                    GLvoid*    data;
+                    GLsizeiptr size;
+                    std::list<VertexAttrib> pointers;
+            };
+
+        public:
             VertexBuffer();
             VertexBuffer(Target target, Usage usage = Usage::StaticDraw);
             VertexBuffer(VertexBuffer&& vbo);
@@ -52,16 +67,20 @@ namespace GL {
             void unbind();
 
             void resize(GLsizeiptr size);
+
+            void setData(const Data& data);
             void setData(GLsizeiptr size, const GLvoid* data);
             void setData(GLsizeiptr size, const GLvoid* data, Usage usage);
             void setSubData(GLintptr offset, GLsizeiptr size, const GLvoid* data);
             
             void setUsage(Usage usage);
             void setTarget(Target target);
+            void setAttributes(const std::list<VertexAttrib> attributes);
 
             GLuint getID() const;
             Usage  getUsage() const;
             Target getTarget() const;
+            const std::list<VertexAttrib>& getAttributes() const;
 
         public:
             template<typename T> 
@@ -83,6 +102,8 @@ namespace GL {
             void create();
             void destroy();
             
+            std::list<VertexAttrib> _attributePointers;
+
             Usage _usage;
             GLuint _vboID;
             Target _target;

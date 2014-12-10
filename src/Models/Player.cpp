@@ -9,6 +9,8 @@ namespace Model {
 
     Player::Player() : Bubble() {
         resetPosition();
+        setColor(glm::vec3(0.2f, 0.8f, 0.2f));
+        setRadius(0.25f);
     }
 
     Player::~Player() {

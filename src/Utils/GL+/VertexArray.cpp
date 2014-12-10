@@ -42,6 +42,17 @@ namespace GL {
         glVertexAttribPointer(index, size, type, normalized, stride, pointer);
     }
 
+    void VertexArray::setAttribPointers(const VertexBuffer& vertexBuffer) {
+        setAttribPointers(vertexBuffer.getAttributes());
+    }
+
+    void VertexArray::setAttribPointers(const std::list<VertexAttrib>& attributes) {
+        for(const VertexAttrib& attrib : attributes) {
+            enableAttrib(attrib.index);
+            setAttribPointer(attrib.index, attrib.size, attrib.type, attrib.normalized, attrib.stride, attrib.offset);
+        }
+    }
+
     GLuint VertexArray::getID() const {
         return _vaoID;
     }

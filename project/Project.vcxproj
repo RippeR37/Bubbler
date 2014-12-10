@@ -75,6 +75,7 @@
     <ClCompile Include="..\src\Utils\GL+\Texture.cpp" />
     <ClCompile Include="..\src\Utils\GL+\Uniform.cpp" />
     <ClCompile Include="..\src\Utils\GL+\VertexArray.cpp" />
+    <ClCompile Include="..\src\Utils\GL+\VertexAttrib.cpp" />
     <ClCompile Include="..\src\Utils\GL+\VertexBuffer.cpp" />
     <ClCompile Include="..\src\Utils\Image.cpp" />
     <ClCompile Include="..\src\Utils\Line.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="..\src\Utils\GL+\Texture.h" />
     <ClInclude Include="..\src\Utils\GL+\Uniform.h" />
     <ClInclude Include="..\src\Utils\GL+\VertexArray.h" />
+    <ClInclude Include="..\src\Utils\GL+\VertexAttrib.h" />
     <ClInclude Include="..\src\Utils\GL+\VertexBuffer.h" />
     <ClInclude Include="..\src\Utils\GL+\VertexBuffer.hpp" />
     <ClInclude Include="..\src\Utils\Image.h" />
@@ -127,6 +129,7 @@
     <ClInclude Include="..\src\Utils\Window.h" />
     <ClInclude Include="..\src\Views\View.h" />
     <ClInclude Include="..\src\Views\ViewAquarium.h" />
+    <ClInclude Include="..\src\Views\ExtendedView.h" />
     <ClInclude Include="..\src\Views\ViewBubble.h" />
     <ClInclude Include="..\src\Views\ViewFloor.h" />
   </ItemGroup>

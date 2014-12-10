@@ -37,6 +37,7 @@ namespace Controller {
             SpectateCamera& getSpectateCamera();
             Model::Aquarium& getAquarium();
             Model::Player& getPlayer();
+            Model::Bubbles& getBubbles();
             GL::Pipeline& getPipeline();
             Model::CameraType getCameraType() const;
 
