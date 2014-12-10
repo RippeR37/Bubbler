@@ -45,6 +45,8 @@ namespace View {
                 _vbo.bind();
                 _vbo.setData(vertexData);
                 _vbo.unbind();
+
+                vertexData.done();
             }
 
             virtual GL::VertexBuffer::Data getVertexData(const T& object) = 0;
@@ -89,6 +91,8 @@ namespace View {
                 _vbo.bind();
                 _vbo.setData(vertexData);
                 _vbo.unbind();
+
+                vertexData.done();
             }
 
             virtual GL::VertexBuffer::Data getVertexData() = 0;
