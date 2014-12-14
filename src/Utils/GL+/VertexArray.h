@@ -42,8 +42,11 @@ namespace GL {
             void enableAttrib(GLuint index);
             void disableAttrib(GLuint index);
 
+            void attachVBO(const VertexBuffer* vertexBuffer);
+
             void setAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
             
+            void setAttribPointers();
             void setAttribPointers(const VertexBuffer& vertexBuffer);
             void setAttribPointers(const std::list<VertexAttrib>& attributes);
 
@@ -54,26 +57,25 @@ namespace GL {
             GLint getDrawOffset() const;
             GLsizei getDrawCount() const;
             DrawTarget getDrawTarget() const;
-
             GLuint getID() const;
 
-        private:
-            bool isDrawTargetSet;
-            bool isDrawOffsetSet;
-            bool isDrawCountSet;
+            const std::list<const VertexBuffer*>& getAttachedVBOs() const;
 
+        private:
             VertexArray& operator=(const VertexArray&);
             VertexArray(const VertexArray&);
 
             void create();
             void destroy();
 
-            GLuint _vaoID;
+            bool _isDrawTargetSet;
+            bool _isDrawCountSet;
 
+            GLuint _vaoID;
             GLint _drawOffset;
             GLsizei _drawCount;
             DrawTarget _drawTarget;
-
+            std::list<const VertexBuffer*> _attachedVBOs;
     };
 
 }

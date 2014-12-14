@@ -30,9 +30,7 @@ namespace View {
         protected:
             virtual void initVAO() {
                 _vao.bind();
-                    _vbo.bind();
-                        _vao.setAttribPointers(_vbo.getAttributes());
-                    _vbo.unbind();
+                _vao.setAttribPointers();
                 _vao.unbind();
             }
 
@@ -72,9 +70,7 @@ namespace View {
         protected:
             virtual void initVAO() {
                 _vao.bind();
-                    _vbo.bind();
-                        _vao.setAttribPointers(_vbo.getAttributes());
-                    _vbo.unbind();
+                _vao.setAttribPointers();
                 _vao.unbind();
             }
 

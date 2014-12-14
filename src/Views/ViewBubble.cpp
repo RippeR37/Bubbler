@@ -135,8 +135,8 @@ namespace View {
 
         // Set VAO
         _vao.setDrawTarget(GL::VertexArray::DrawTarget::Triangles);
-        _vao.setDrawOffset(0);
         _vao.setDrawCount(vertices.size());
+        _vao.attachVBO(&_vbo);
     }
 
     int ViewBubble::assignLigtbubblePositions(glm::vec3* lightbubblePosition, unsigned int lights) {
@@ -152,8 +152,6 @@ namespace View {
             if(count == lights) 
                 break;
         }
-
-        std::cout << count << std::endl;
 
         return count;
     }

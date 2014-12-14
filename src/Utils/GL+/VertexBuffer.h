@@ -63,9 +63,9 @@ namespace GL {
 
             VertexBuffer& operator=(VertexBuffer&& vbo);
 
-            void bind();
+            void bind() const;
             void bind(Target target);
-            void unbind();
+            void unbind() const;
 
             void resize(GLsizeiptr size);
 

@@ -29,7 +29,7 @@ namespace GL {
         std::swap(_target, vbo._target);
     }
 
-    void VertexBuffer::bind() {
+    void VertexBuffer::bind() const {
         glBindBuffer(static_cast<GLenum>(getTarget()), _vboID);
     }
 
@@ -38,7 +38,7 @@ namespace GL {
         bind();
     }
 
-    void VertexBuffer::unbind() {
+    void VertexBuffer::unbind() const {
         glBindBuffer(static_cast<GLenum>(getTarget()), 0);
     }
     

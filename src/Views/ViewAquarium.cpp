@@ -116,8 +116,8 @@ namespace View {
 
         // Set VAO
         _vao.setDrawTarget(GL::VertexArray::DrawTarget::Triangles);
-        _vao.setDrawOffset(0);
         _vao.setDrawCount(vertices.size());
+        _vao.attachVBO(&_vbo);
     }
 
 }
