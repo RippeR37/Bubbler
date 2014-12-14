@@ -147,6 +147,7 @@ namespace Model {
         position.z = static_cast<float>(rand() % 1000) / 100.0f;
 
         color = glm::vec3(static_cast<float>(rand() % 128) / 256.0f + 0.3f);
+        color.b += 0.25f;
 
         bubble.setPosition(position);
         bubble.setColor(color);
