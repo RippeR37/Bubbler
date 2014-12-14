@@ -158,9 +158,6 @@
     <ClCompile Include="..\src\Models\Aquarium.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Views\ViewAquarium.cpp">
-      <Filter>Source Files\Views</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Models\Bubble.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
@@ -184,6 +181,12 @@
     </ClCompile>
     <ClCompile Include="..\src\Utils\GL+\VertexAttrib.cpp">
       <Filter>Source Files\Utils\GL+</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Views\ViewAquarium.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Controllers\States\Loss.cpp">
+      <Filter>Source Files\Controllers\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,9 +283,6 @@
     <ClInclude Include="..\src\Models\Aquarium.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Views\ViewAquarium.h">
-      <Filter>Header Files\Views</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Models\Bubble.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
@@ -315,6 +315,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Views\ExtendedView.h">
       <Filter>Header Files\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Views\ViewAquarium.h">
+      <Filter>Header Files\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Controllers\States\Loss.h">
+      <Filter>Header Files\Controllers\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

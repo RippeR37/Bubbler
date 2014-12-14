@@ -18,6 +18,7 @@ namespace Controller {
             void updateMouseWheel(double x, double y);
 
             void resetProjection();
+            void resetAngles();
 
             float getAngleX() const;
             float getAngleY() const;

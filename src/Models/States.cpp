@@ -7,6 +7,7 @@ namespace Model {
         shutdown = new Controller::State::Shutdown;
 
         gameplay = nullptr;
+        loss = nullptr;
     }
 
     States::~States() {
@@ -14,6 +15,7 @@ namespace Model {
         delete shutdown;
         
         delete gameplay;
+        delete loss;
     }
 
     States& States::get() {
@@ -24,6 +26,9 @@ namespace Model {
     void States::initialize() {
         if(gameplay == nullptr) 
             gameplay = new Controller::State::Gameplay;
+
+        if(loss == nullptr)
+            loss = new Controller::State::Loss;
     }
 
 }

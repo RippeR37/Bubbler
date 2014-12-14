@@ -12,6 +12,22 @@ namespace GL {
 
     class VertexArray {
         public:
+            enum class DrawTarget : GLenum {
+                Points                  = GL_POINTS, 
+                LineStrip               = GL_LINE_STRIP,
+                LineLoop                = GL_LINE_LOOP, 
+                Lines                   = GL_LINES, 
+                LineStripAdjacency      = GL_LINE_STRIP_ADJACENCY, 
+                LinesAdjacency          = GL_LINES_ADJACENCY, 
+                TriangleStrip           = GL_TRIANGLE_STRIP, 
+                TriangleFan             = GL_TRIANGLE_FAN, 
+                Triangles               = GL_TRIANGLES, 
+                TriangleStripAdjacency  = GL_TRIANGLE_STRIP_ADJACENCY, 
+                TrianglesAdjacency      = GL_TRIANGLES_ADJACENCY,
+                Patches                 = GL_PATCHES
+            };
+
+        public:
             VertexArray();
             VertexArray(VertexArray&& vao);
             ~VertexArray();
@@ -21,6 +37,8 @@ namespace GL {
             void bind();
             void unbind();
 
+            void drawArrays();
+
             void enableAttrib(GLuint index);
             void disableAttrib(GLuint index);
 
@@ -29,9 +47,21 @@ namespace GL {
             void setAttribPointers(const VertexBuffer& vertexBuffer);
             void setAttribPointers(const std::list<VertexAttrib>& attributes);
 
+            void setDrawOffset(GLint offset);
+            void setDrawCount(GLsizei count);
+            void setDrawTarget(DrawTarget target);
+
+            GLint getDrawOffset() const;
+            GLsizei getDrawCount() const;
+            DrawTarget getDrawTarget() const;
+
             GLuint getID() const;
 
         private:
+            bool isDrawTargetSet;
+            bool isDrawOffsetSet;
+            bool isDrawCountSet;
+
             VertexArray& operator=(const VertexArray&);
             VertexArray(const VertexArray&);
 
@@ -39,6 +69,11 @@ namespace GL {
             void destroy();
 
             GLuint _vaoID;
+
+            GLint _drawOffset;
+            GLsizei _drawCount;
+            DrawTarget _drawTarget;
+
     };
 
 }

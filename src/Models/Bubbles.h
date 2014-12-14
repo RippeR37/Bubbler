@@ -13,6 +13,7 @@ namespace Model {
             ~Bubbles();
 
             void update(double deltaTime);
+            void resetToLevel(unsigned int level);
 
             void setMaxCount(unsigned int maxCount);
             void setSpecialsCount(unsigned int specialsCount);
@@ -35,6 +36,9 @@ namespace Model {
             unsigned int _maxCount;
             unsigned int _specialsCount;
             unsigned int _maxSpecialsCount;
+
+            float _speedFactor;
+            float _baseSpeedFactor;
             std::list<Bubble> _bubbles;
     };
 

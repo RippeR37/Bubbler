@@ -11,6 +11,7 @@ namespace Controller {
 
     State::Gameplay::Gameplay() : _camera(_lockedCamera) {
         _cameraType = Model::CameraType::Locked;
+        _level = 0;
     }
 
     void State::Gameplay::update(double frameTime) {
@@ -20,15 +21,16 @@ namespace Controller {
             return;
         
         Util::TimeLoop::semiFixed(frameTime, timeStep, [&, this](double deltaTime) { 
-            if(_cameraType == Model::CameraType::Locked)
-                _lockedCamera.update(deltaTime);
+            if(_player.isAlive() == true && _player.isFinishedLevel() == false) {
+                if(_cameraType == Model::CameraType::Locked)
+                    _lockedCamera.update(deltaTime);
             
-            _player.update(deltaTime);
-            _bubbles.update(deltaTime);
+                _player.update(deltaTime);
+                _bubbles.update(deltaTime);
+            }
         });
 
-        if(isEnd() == true)
-            State::changeTo(Model::States::get().shutdown);
+        handleUpdate();
     }
 
     void State::Gameplay::render() {
@@ -67,6 +69,7 @@ namespace Controller {
         glfwSetKeyCallback(Game::get().getWindow().getHandle(), handleKeyboard);
         glfwSetScrollCallback(Game::get().getWindow().getHandle(), handleMouseScrolling);
         glfwSetCursorPosCallback(Game::get().getWindow().getHandle(), handleMouseMovement);
+        glfwSetInputMode(Game::get().getWindow().getHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         // Depth testing
         glDepthFunc(GL_LESS);
@@ -87,14 +90,49 @@ namespace Controller {
         _viewBubble.init(_player);
 
         _spectateCamera.init(_aquarium);
+
+        _bubbles.resetToLevel(getLevel());
     }
 
     void State::Gameplay::onUnload() {
         glfwSetKeyCallback(Game::get().getWindow().getHandle(),         nullptr);
         glfwSetScrollCallback(Game::get().getWindow().getHandle(),      nullptr);
         glfwSetCursorPosCallback(Game::get().getWindow().getHandle(),   nullptr);
+
+        glfwSetInputMode(Game::get().getWindow().getHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
+    void State::Gameplay::handleUpdate() {
+        static std::function<int(int)> pointsFunc = [&](int n) {
+            if(n == 0)
+                return 0;
+            else
+                return 10 * n + pointsFunc(n-1);
+        };
+
+        if(_player.isFinishedLevel() == true) {
+            setNextLevel();
+
+            _player.resetPosition();
+            _player.resetFinishedLevel();
+
+            _bubbles.resetToLevel(getLevel());
+
+            _lockedCamera.resetAngles();
+        }
+
+        if(isEnd() == true) {
+            std::cout << "You have lost on level #" << getLevel() << std::endl;
+            std::cout << "Your have earned " << pointsFunc(getLevel()) + static_cast<int>(_player.getPosition().z) << " points" << std::endl;
+            
+            State::changeTo(Model::States::get().loss);
+        }
     }
     
+    unsigned int State::Gameplay::getLevel() const {
+        return _level;
+    }
+
     Camera& State::Gameplay::getCamera() {
         return _camera;
     }
@@ -158,9 +196,9 @@ namespace Controller {
     }
     
     void State::Gameplay::handleMouseMovement(GLFWwindow* window, double x, double y) {
-        static double centerX = 400.0;
-        static double centerY = 300.0;
-        static double dx = -1.0;
+        static double centerX = Game::get().getWindow().getWidth()  / 2.0;
+        static double centerY = Game::get().getWindow().getHeight() / 2.0;
+        static double dx;
         static double dy;
 
         dx = x - centerX;
@@ -195,8 +233,12 @@ namespace Controller {
         }
     }
 
+    void State::Gameplay::setNextLevel() {
+        _level += 1;
+    }
+
     bool State::Gameplay::isEnd() const {
-        return false;
+        return _player.isAlive() == false;
     };
 
 }

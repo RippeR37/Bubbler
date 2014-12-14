@@ -12,8 +12,8 @@
 #include "../../Models/CameraType.h"
 
 #include "../../Views/ViewFloor.h"
-#include "../../Views/ViewAquarium.h"
 #include "../../Views/ViewBubble.h"
+#include "../../Views/ViewAquarium.h"
 
 #include "../../Utils/GL+/Pipeline.h"
 
@@ -31,15 +31,20 @@ namespace Controller {
 
             void onLoad();
             void onUnload();
+
+            void handleUpdate();
             
+            unsigned int getLevel() const;
             Camera& getCamera();
             LockedCamera& getLockedCamera();
             SpectateCamera& getSpectateCamera();
-            Model::Aquarium& getAquarium();
+
             Model::Player& getPlayer();
             Model::Bubbles& getBubbles();
-            GL::Pipeline& getPipeline();
+            Model::Aquarium& getAquarium();
             Model::CameraType getCameraType() const;
+
+            GL::Pipeline& getPipeline();
 
             static void handleKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods);
             static void handleMouseMovement(GLFWwindow* window, double x, double y);
@@ -47,24 +52,28 @@ namespace Controller {
 
         private:
             void setCamera(Model::CameraType cameraType);
+            void setNextLevel();
             bool isEnd() const;
 
+            unsigned int _level;
             Camera& _camera;
             LockedCamera _lockedCamera;
             SpectateCamera _spectateCamera;
-            Model::CameraType _cameraType;
+
+        private:
             GL::Pipeline _pipeline;
 
         private:
             Model::Floor _floor;
-            Model::Aquarium _aquarium;
             Model::Player _player;
             Model::Bubbles _bubbles;
+            Model::Aquarium _aquarium;
+            Model::CameraType _cameraType;
 
         private:
             View::ViewFloor _viewFloor;
-            View::ViewAquarium _viewAquarium;
             View::ViewBubble _viewBubble;
+            View::ViewAquarium _viewAquarium;
     };
 
 }

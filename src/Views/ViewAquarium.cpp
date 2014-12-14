@@ -1,12 +1,8 @@
-#ifndef GLM_FORCE_RADIANS
-#define GLM_FORCE_RADIANS
-#endif
-
 #include "ViewAquarium.h"
+#include "ViewBubble.h"
 #include "../Game.h"
 #include "../Models/States.h"
 
-#include <iostream>
 #include <vector>
 
 namespace View {
@@ -22,129 +18,106 @@ namespace View {
 
     }
 
-    void ViewAquarium::init(const Model::Aquarium& aquarium) {
-        initVBO(aquarium);
-        initVAO();
-    }
-
     void ViewAquarium::render(const Model::Aquarium& aquarium) {
         static Controller::State::Gameplay& gameplay = *Model::States::get().gameplay;
-        static glm::vec4 color = gameplay.getAquarium().getColor();
+        static glm::vec4 color;
         static glm::vec3 camPos;
         static glm::mat4 matrixMVP;
+        static glm::vec3 lightbubblePosition[5];
+        static int lightbubbleCount;
 
+        color     = gameplay.getAquarium().getColor();
+        camPos    = gameplay.getPlayer().getPosition();
         matrixMVP = gameplay.getPipeline().getMVP();
-        camPos = gameplay.getPlayer().getPosition();
+        lightbubbleCount = ViewBubble::assignLigtbubblePositions(lightbubblePosition, 5);
 
-        glm::vec3 lightbubblePosition[5];
-        int count = 0;
-        for(auto it = gameplay.getBubbles().getBubbles().begin(); it != gameplay.getBubbles().getBubbles().end(); ++it) {
-            if(it->isSpecial()) {
-                lightbubblePosition[count] = it->getPosition();
-                ++count;
-            }
-
-            if(count == 5) 
-                break;
-        }
-        
         _program.use();
-        _program["MVP"].setMatrix(matrixMVP);
-        _program["CamPos"].setVec(camPos);
-        _program["uColor"].setVec(color);
-        _program["lightbubblePosition"].setVec(lightbubblePosition[0], count);
+            _program["MVP"].setMatrix(matrixMVP);
+            _program["CamPos"].setVec(camPos);
+            _program["uColor"].setVec(color);
+            _program["lightbubblePosition"].setVec(lightbubblePosition[0], lightbubbleCount);
+            _program["lightbubbleCount"].set(lightbubbleCount);
 
             _vao.bind();
-                glDrawArrays(GL_TRIANGLES, 0, _drawCount);
+            _vao.drawArrays();
             _vao.unbind();
 
         _program.unbind();
     }
 
-    void ViewAquarium::initVAO() {
-        _vao.bind();
-            _vbo.bind();
-                _vao.enableAttrib(0);
-                _vao.setAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)0);
-            _vbo.unbind();
-        _vao.unbind();
-    }
-
-    void ViewAquarium::initVBO(const Model::Aquarium& aquarium) {
-        std::vector<glm::vec4> vertices = getVertices(aquarium);
-
-        _vbo.setUsage(GL::VertexBuffer::Usage::StaticDraw);
-        _vbo.setTarget(GL::VertexBuffer::Target::Array);
-
-        _vbo.bind();
-        _vbo.setData(vertices);
-        _vbo.unbind();
-    }
-
-    std::vector<glm::vec4> ViewAquarium::getVertices(const Model::Aquarium& aquarium) {
+    void ViewAquarium::setVertexData(const Model::Aquarium& aquarium) {
+        GL::VertexBuffer::Data vertexData;
         std::vector<glm::vec4> vertices;
-        float x, y, z;
-        float w, h, d;
 
-        x = aquarium.getPosition().x;
-        y = aquarium.getPosition().y;
-        z = aquarium.getPosition().z;
+        {
+            float x, y, z;
+            float w, h, d;
 
-        w = aquarium.getSize().x;
-        h = aquarium.getSize().y;
-        d = aquarium.getSize().z;
+            x = aquarium.getPosition().x;       w = aquarium.getSize().x;
+            y = aquarium.getPosition().y;       h = aquarium.getSize().y;
+            z = aquarium.getPosition().z;       d = aquarium.getSize().z;
 
-        // Bottom
-        vertices.push_back(glm::vec4(x,     y, z,     1.0f));
-        vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
-        vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y, z + d, 1.0f));
+            // Bottom
+            vertices.push_back(glm::vec4(x,     y, z,     1.0f));
+            vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
+            vertices.push_back(glm::vec4(x + w, y, z,     1.0f));
+            vertices.push_back(glm::vec4(x,     y, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y, z + d, 1.0f));
 
-        // Up
-        vertices.push_back(glm::vec4(x,     y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
+            // Up
+            vertices.push_back(glm::vec4(x,     y + h, z,     1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
 
-        // Left
-        vertices.push_back(glm::vec4(x, y,     z,     1.0f));
-        vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
-        vertices.push_back(glm::vec4(x, y + h, z + d, 1.0f));
+            // Left
+            vertices.push_back(glm::vec4(x, y,     z,     1.0f));
+            vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
+            vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x, y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x, y + h, z,     1.0f));
+            vertices.push_back(glm::vec4(x, y + h, z + d, 1.0f));
         
-        // Right
-        vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
+            // Right
+            vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z,     1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z,     1.0f));
         
-        // Front
-        vertices.push_back(glm::vec4(x,     y,     z, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z, 1.0f));
+            // Front
+            vertices.push_back(glm::vec4(x,     y,     z, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z, 1.0f));
         
-        // Back
-        vertices.push_back(glm::vec4(x,     y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
-        vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
-        vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
+            // Back
+            vertices.push_back(glm::vec4(x,     y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y,     z + d, 1.0f));
+            vertices.push_back(glm::vec4(x,     y + h, z + d, 1.0f));
+            vertices.push_back(glm::vec4(x + w, y + h, z + d, 1.0f));
+        }
         
-        _drawCount = vertices.size();
+        // VertexData assignment
+        vertexData.data = &vertices[0];
+        vertexData.size = vertices.size() * sizeof(glm::vec4);
+        vertexData.pointers.push_back(GL::VertexAttrib(0, 4, GL_FLOAT, 0, 0));
 
-        return vertices;
+        // Set VBO
+        _vbo.setData(vertexData);
+
+        // Set VAO
+        _vao.setDrawTarget(GL::VertexArray::DrawTarget::Triangles);
+        _vao.setDrawOffset(0);
+        _vao.setDrawCount(vertices.size());
     }
 
 }

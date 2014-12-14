@@ -17,13 +17,11 @@ namespace Controller {
     LockedCamera::LockedCamera() : Camera() {
         _position = glm::vec3(0.0f, 1.0f, 0.0f);
 
-        _angleX = 0; //3.14159265f;  // 45 deg
-        _angleY = 0; //0.17453292f;  // 10 deg
-
         _speed = 1.0f;
         _mouseSpeed = 0.003f;
+        _fovAngle = 90.0f;
 
-        _fovAngle = 45.0f;
+        resetAngles();
     }
 
     LockedCamera::~LockedCamera() {
@@ -71,9 +69,14 @@ namespace Controller {
     }
 
     void LockedCamera::resetProjection() {
-        _projectionMatrix = glm::perspective(_fovAngle, 4.0f/3.0f, 0.1f, 100.0f);
+        _projectionMatrix = glm::perspective(glm::radians(_fovAngle), 4.0f/3.0f, 0.1f, 100.0f);
 
         Model::States::get().gameplay->getPipeline().setProjection(_projectionMatrix);
+    }
+    
+    void LockedCamera::resetAngles() {
+        _angleX = 0;
+        _angleY = 0;
     }
 
     float LockedCamera::getAngleX() const {

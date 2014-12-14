@@ -29,12 +29,15 @@ namespace Controller {
             class Shutdown;
             
             class Gameplay;
+            class Loss;
     };
 
 }
 
 #include "States/Initialization.h"
-#include "States/Gameplay.h"
 #include "States/Shutdown.h"
+
+#include "States/Gameplay.h"
+#include "States/Loss.h"
 
 #endif

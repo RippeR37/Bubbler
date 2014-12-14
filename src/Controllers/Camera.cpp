@@ -10,7 +10,7 @@ namespace Controller {
 
     Camera::Camera() {
         _matrix = glm::mat4(1.0f);
-        _projectionMatrix = glm::perspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
+        _projectionMatrix = glm::perspective(glm::radians(90.0f), 4.0f/3.0f, 0.1f, 100.0f);
     }
 
     Camera::~Camera() {

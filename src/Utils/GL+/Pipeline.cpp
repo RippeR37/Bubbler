@@ -17,7 +17,7 @@ namespace GL {
     }
 
     void Pipeline::setProjection() {
-        setProjection(45.0f, 4.0f/3.0f, 0.01f, 200.0f);
+        setProjection(90.0f, 4.0f/3.0f, 0.01f, 200.0f);
     }
 
     void Pipeline::setProjection(float fov, float aspect, float near, float far) {
@@ -26,7 +26,7 @@ namespace GL {
         _nearClip = near;
         _farClip = far;
 
-        _projection = glm::perspective(getFoV(), getAspect(), getNear(), getFar());
+        _projection = glm::perspective(glm::radians(getFoV()), getAspect(), getNear(), getFar());
     }
 
     void Pipeline::setProjection(const glm::mat4& projectionMatrix) {

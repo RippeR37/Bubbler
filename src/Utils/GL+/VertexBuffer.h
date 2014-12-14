@@ -49,27 +49,10 @@ namespace GL {
                 public:
                     Data() : data(nullptr), size(0) { }
                     Data(GLvoid* data_, GLsizeiptr size_) : data(data), size(size_) { }
-                    
-                    Data(const Data& object) {
-                        data = object.data;
-                        size = object.size;
-                        pointers = object.pointers;
-                        _doneFunction = object._doneFunction;
-                    }
-
-                    void done() {
-                        if(_doneFunction)
-                            _doneFunction();
-                        else
-                            throw Util::Exception::FatalError(std::string("Attempt to cleanup VertexBuffer data without proper function."));
-                    }
 
                     GLvoid*    data;
                     GLsizeiptr size;
                     std::list<VertexAttrib> pointers;
-
-                private:
-                    std::function<void()> _doneFunction;
             };
 
         public:

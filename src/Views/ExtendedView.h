@@ -31,25 +31,21 @@ namespace View {
             virtual void initVAO() {
                 _vao.bind();
                     _vbo.bind();
-                        _vao.setAttribPointers(_vbo.getAttributes);
+                        _vao.setAttribPointers(_vbo.getAttributes());
                     _vbo.unbind();
                 _vao.unbind();
             }
 
             virtual void initVBO(const T& object) {
-                GL::VertexBuffer::Data vertexData = getVertexData(object);
-
                 _vbo.setUsage(GL::VertexBuffer::Usage::StaticDraw);
                 _vbo.setTarget(GL::VertexBuffer::Target::Array);
 
                 _vbo.bind();
-                _vbo.setData(vertexData);
+                    setVertexData(object);
                 _vbo.unbind();
-
-                vertexData.done();
             }
 
-            virtual GL::VertexBuffer::Data getVertexData(const T& object) = 0;
+            virtual void setVertexData(const T& object) = 0;
 
             unsigned int _drawCount;
             GL::Program _program;
@@ -77,25 +73,21 @@ namespace View {
             virtual void initVAO() {
                 _vao.bind();
                     _vbo.bind();
-                        _vao.setAttribPointers(_vbo.getAttributes);
+                        _vao.setAttribPointers(_vbo.getAttributes());
                     _vbo.unbind();
                 _vao.unbind();
             }
 
             virtual void initVBO() {
-                GL::VertexBuffer::Data vertexData = getVertexData();
-
                 _vbo.setUsage(GL::VertexBuffer::Usage::StaticDraw);
                 _vbo.setTarget(GL::VertexBuffer::Target::Array);
 
                 _vbo.bind();
-                _vbo.setData(vertexData);
+                    setVertexData();
                 _vbo.unbind();
-
-                vertexData.done();
             }
 
-            virtual GL::VertexBuffer::Data getVertexData() = 0;
+            virtual void setVertexData() = 0;
 
             unsigned int _drawCount;
             GL::Program _program;

@@ -9,16 +9,15 @@ namespace Model {
 
     Player::Player() : Bubble() {
         resetPosition();
-        setColor(glm::vec3(0.2f, 0.8f, 0.2f));
+        setColor(glm::vec3(0.4f, 0.4f, 0.7f));
         setRadius(0.25f);
+
+        _isAlive = true;
+        _isFinishedLevel = false;
     }
 
     Player::~Player() {
 
-    }
-
-    void Player::resetPosition() {
-        setPosition(glm::vec3(2.5f, 2.5f, 0.0f));
     }
 
     void Player::update(double deltaTime) {
@@ -55,6 +54,23 @@ namespace Model {
             _position -= _speed * static_cast<float>(deltaTime) * front;
 
         checkBoundries();
+        checkCollision();
+    }
+
+    void Player::resetPosition() {
+        setPosition(glm::vec3(2.5f, 2.5f, 0.0f));
+    }
+
+    void Player::resetFinishedLevel() {
+        _isFinishedLevel = false;
+    }
+
+    bool Player::isAlive() const {
+        return _isAlive;
+    }
+
+    bool Player::isFinishedLevel() const {
+        return _isFinishedLevel;
     }
 
     void Player::checkBoundries() {
@@ -75,8 +91,21 @@ namespace Model {
         if(getPosition().z - getRadius() < aquarium.getPosition().z)
             _position.z = aquarium.getPosition().z + getRadius();
 
-        if(getPosition().z + getRadius() > aquarium.getPosition().z + aquarium.getSize().z)
+        if(getPosition().z + getRadius() > aquarium.getPosition().z + aquarium.getSize().z) {
             _position.z = aquarium.getPosition().z + aquarium.getSize().z - getRadius();
+            _isFinishedLevel = true;
+        }
+    }
+
+    void Player::checkCollision() {
+        Bubbles& bubbles = States::get().gameplay->getBubbles();
+
+        for(const Bubble& bubble : bubbles.getBubbles()) {
+            if(isCollision(bubble)) {
+                _isAlive = false;
+                break;
+            }
+        }
     }
 
 }

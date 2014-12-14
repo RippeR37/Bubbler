@@ -12,8 +12,10 @@ namespace Model {
             void initialize();
 
             Controller::State::Initialization* initialization;
-            Controller::State::Gameplay* gameplay;
             Controller::State::Shutdown* shutdown;
+
+            Controller::State::Gameplay* gameplay;
+            Controller::State::Loss* loss;
 
         private:
             States();

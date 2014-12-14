@@ -54,6 +54,7 @@
     <ClCompile Include="..\src\Controllers\State.cpp" />
     <ClCompile Include="..\src\Controllers\States\Gameplay.cpp" />
     <ClCompile Include="..\src\Controllers\States\Initialization.cpp" />
+    <ClCompile Include="..\src\Controllers\States\Loss.cpp" />
     <ClCompile Include="..\src\Controllers\States\Shutdown.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="..\src\Controllers\State.h" />
     <ClInclude Include="..\src\Controllers\States\Gameplay.h" />
     <ClInclude Include="..\src\Controllers\States\Initialization.h" />
+    <ClInclude Include="..\src\Controllers\States\Loss.h" />
     <ClInclude Include="..\src\Controllers\States\Shutdown.h" />
     <ClInclude Include="..\src\Game.h" />
     <ClInclude Include="..\src\Models\Aquarium.h" />
@@ -128,9 +130,9 @@
     <ClInclude Include="..\src\Utils\Timer.h" />
     <ClInclude Include="..\src\Utils\Window.h" />
     <ClInclude Include="..\src\Views\View.h" />
-    <ClInclude Include="..\src\Views\ViewAquarium.h" />
     <ClInclude Include="..\src\Views\ExtendedView.h" />
     <ClInclude Include="..\src\Views\ViewBubble.h" />
+    <ClInclude Include="..\src\Views\ViewAquarium.h" />
     <ClInclude Include="..\src\Views\ViewFloor.h" />
   </ItemGroup>
   <ItemGroup>

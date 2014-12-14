@@ -1,4 +1,5 @@
 #include "VertexArray.h"
+#include "../Exception.h"
 
 #include <utility>
 
@@ -30,6 +31,13 @@ namespace GL {
         glBindVertexArray(0);
     }
 
+    void VertexArray::drawArrays() {
+        if(isDrawTargetSet && isDrawOffsetSet && isDrawCountSet)
+            glDrawArrays(static_cast<GLenum>(getDrawTarget()), getDrawOffset(), getDrawCount());
+        else
+            throw Util::Exception::FatalError(std::string("Attempt to drawArrays() without setting target/offset/count before"));
+    }
+
     void VertexArray::enableAttrib(GLuint index) {
         glEnableVertexAttribArray(index);
     }
@@ -53,12 +61,43 @@ namespace GL {
         }
     }
 
+    void VertexArray::setDrawOffset(GLint offset) {
+        _drawOffset = offset;
+        isDrawOffsetSet = true;
+    }
+
+    void VertexArray::setDrawCount(GLsizei count) {
+        _drawCount = count;
+        isDrawCountSet = true;
+    }
+
+    void VertexArray::setDrawTarget(DrawTarget target) {
+        _drawTarget = target;
+        isDrawTargetSet = true;
+    }
+
+    GLint VertexArray::getDrawOffset() const {
+        return _drawOffset;
+    }
+
+    GLsizei VertexArray::getDrawCount() const {
+        return _drawCount;
+    }
+
+    VertexArray::DrawTarget VertexArray::getDrawTarget() const {
+        return _drawTarget;
+    }
+
     GLuint VertexArray::getID() const {
         return _vaoID;
     }
 
     void VertexArray::create() {
         glGenVertexArrays(1, &_vaoID);
+
+        isDrawTargetSet = false;
+        isDrawOffsetSet = false;
+        isDrawCountSet  = false;
     }
 
     void VertexArray::destroy() {

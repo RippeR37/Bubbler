@@ -24,8 +24,6 @@ namespace Util {
 
         _handle = glfwCreateWindow(getWidth(), getHeight(), _title.c_str(), nullptr, nullptr);
 
-        glfwSetInputMode(_handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
         setContext();
 
         Window::initializeGLEW();

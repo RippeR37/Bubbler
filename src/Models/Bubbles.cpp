@@ -8,9 +8,9 @@
 namespace Model {
 
     Bubbles::Bubbles() {
-        setMaxCount(10);
-        setSpecialsCount(0);
-        setMaxSpecialsCount(5);
+        resetToLevel(0);
+
+        _baseSpeedFactor = 0.4f;
     }
 
     Bubbles::~Bubbles() {
@@ -48,6 +48,31 @@ namespace Model {
                 ++it;
             }
         }
+
+        // Bubble vs bubble collision
+        for(auto it = _bubbles.begin(); it != _bubbles.end(); ) {
+            auto it2 = it; it2++;
+            
+            bool destroyFirst = false;
+            for(it2; it2 != _bubbles.end(); ) {
+                if(it->isCollision(*it2)) {
+                    if(it2->isSpecial())
+                        setSpecialsCount(getSpecialsCount() - 1);
+                    it2 = _bubbles.erase(it2);
+                    destroyFirst = true;
+                } else {
+                    it2++;
+                }
+            }
+
+            if(destroyFirst) {
+                if(it->isSpecial())
+                    setSpecialsCount(getSpecialsCount() - 1);
+
+                it = _bubbles.erase(it);
+            } else
+                it++;
+        }
         
         while(addSpecialsCount() > 0)
             createSpecialBubble();
@@ -59,6 +84,19 @@ namespace Model {
         _bubbles.sort([camPos](Bubble& a, Bubble& b) -> bool {
             return a._distToCam > b._distToCam; 
         });
+    }
+
+    void Bubbles::resetToLevel(unsigned int level) {
+        setMaxCount(5 + 2 * level);
+        setMaxSpecialsCount(5);
+        setSpecialsCount(0);
+
+        if(getMaxCount() > 40)
+            setMaxCount(40);
+
+        _bubbles.clear();
+
+        _speedFactor = _baseSpeedFactor + static_cast<float>(level) * 0.1f;
     }
 
     void Bubbles::setMaxCount(unsigned int maxCount) {
@@ -102,7 +140,7 @@ namespace Model {
         
         // randomize data
         radius = static_cast<float>(rand() % 250) / 1000.0f + 0.1f;
-        speed  = static_cast<float>(rand() % 500) /  350.0f + 0.2f;
+        speed  = static_cast<float>(rand() % 350) /  350.0f + _speedFactor;
 
         position.x = static_cast<float>(rand() % 1000) / 200.0f;
         position.y = 0.0f;
@@ -127,7 +165,7 @@ namespace Model {
         
         // randomize data
         radius = static_cast<float>(rand() % 250) / 1000.0f + 0.1f;
-        speed  = static_cast<float>(rand() % 500) /  350.0f + 0.2f;
+        speed  = static_cast<float>(rand() % 350) /  350.0f * 2.0f + _speedFactor;
 
         position.x = static_cast<float>(rand() % 1000) / 200.0f;
         position.y = 0.0f;

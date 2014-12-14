@@ -13,10 +13,17 @@ namespace Model {
 
             void update(double deltaTime);
             void resetPosition();
+            void resetFinishedLevel();
+
+            bool isAlive() const;
+            bool isFinishedLevel() const;
 
         private:
             void checkBoundries();
+            void checkCollision();
 
+            bool _isAlive;
+            bool _isFinishedLevel;
     };
 
 }

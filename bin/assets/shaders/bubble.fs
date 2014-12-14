@@ -10,6 +10,7 @@ uniform vec3 uCamPos;
 uniform vec3 uBubbleCenter;
 uniform vec3 uEyeDir;
 uniform vec3 lightbubblePosition[5];
+uniform int  lightbubbleCount;
 
 const vec3 lightbubbleColor = vec3(1.0, 0.0, 0.0);
 const vec3 directionalLight = vec3(0.0, 1.0, 0.0);
@@ -38,7 +39,7 @@ void main() {
     /////////////
     // Ligbubbles
     /////////////
-    for(int i = 0; i < 5; ++i) {
+    for(int i = 0; i < min(5, lightbubbleCount); ++i) {
         lightbubbleDistanceFactor = distance(lightbubblePosition[i], interpolatedPosition);
         lightbubbleDistanceFactor = clamp(1.0 / (lightbubbleDistanceFactor * lightbubbleDistanceFactor), 0.0, 1.0);
         lightbubbleDiffuseFactor = clamp(dot(interpolatedNormal, normalize(lightbubblePosition[i] - uBubbleCenter)), 0.0, 1.0);
