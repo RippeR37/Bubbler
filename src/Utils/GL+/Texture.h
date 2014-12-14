@@ -55,8 +55,8 @@ namespace GL {
 
             Texture& operator=(Texture&& texture);
 
-            void bind();
-            void unbind();
+            void bind() const;
+            void unbind() const;
             void load(const Util::Image& image, Target target, Format format);
 
             bool isAlpha() const;

@@ -34,10 +34,9 @@ namespace GL {
 
             VertexArray& operator=(VertexArray&& vao);
 
-            void bind();
-            void unbind();
-
-            void drawArrays();
+            void bind() const;
+            void unbind() const;
+            void drawArrays() const;
 
             void enableAttrib(GLuint index);
             void disableAttrib(GLuint index);

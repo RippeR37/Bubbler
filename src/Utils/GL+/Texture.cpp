@@ -41,11 +41,11 @@ namespace GL {
         std::swap(_textureID, texture._textureID);
     }
 
-    void Texture::bind() {
+    void Texture::bind() const {
         glBindTexture(static_cast<GLenum>(getTarget()), getID());
     }
 
-    void Texture::unbind() {
+    void Texture::unbind() const {
         glBindTexture(static_cast<GLenum>(getTarget()), 0);
     }
 

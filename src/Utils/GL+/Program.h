@@ -27,9 +27,10 @@ namespace GL {
             Uniform& operator[](const std::string& uniformName);
 
             void load(const Shader& vertexShader, const Shader& fragmentShader);
-            void use();
-            void unbind();
+            void use() const;
+            void unbind() const;
 
+            bool isLinked() const;
             GLuint getID() const;
             GLuint getUniformLocation(const std::string& uniformName);
             const Uniform& getUniform(const std::string& uniformName);

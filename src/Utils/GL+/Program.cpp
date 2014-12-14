@@ -18,7 +18,7 @@ namespace GL {
     }
 
     Program::Program(const std::string& vsPath, const std::string& fsPath) {
-        Program();
+        create();
 
         Shader vertexShader(vsPath, Shader::Type::VertexShader);
         Shader fragmentShader(fsPath, Shader::Type::FragmentShader);
@@ -26,7 +26,7 @@ namespace GL {
     }
 
     Program::Program(const Shader& vertexShader, const Shader& fragmentShader) {
-        Program();
+        create();
 
         load(vertexShader, fragmentShader);
     }
@@ -53,13 +53,17 @@ namespace GL {
         }
     }
 
-    void Program::use() {
+    void Program::use() const {
         if(_linked)
             glUseProgram(_programID);
     }
 
-    void Program::unbind() {
+    void Program::unbind() const {
         glUseProgram(0);
+    }
+    
+    bool Program::isLinked() const {
+        return _linked;
     }
 
     GLuint Program::getID() const {

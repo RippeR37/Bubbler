@@ -35,15 +35,15 @@ namespace GL {
         std::swap(_attachedVBOs, vao._attachedVBOs);
     }
 
-    void VertexArray::bind() {
+    void VertexArray::bind() const {
         glBindVertexArray(_vaoID);
     }
 
-    void VertexArray::unbind() {
+    void VertexArray::unbind() const {
         glBindVertexArray(0);
     }
 
-    void VertexArray::drawArrays() {
+    void VertexArray::drawArrays() const {
         if(_isDrawTargetSet && _isDrawCountSet)
             glDrawArrays(static_cast<GLenum>(getDrawTarget()), getDrawOffset(), getDrawCount());
         else
