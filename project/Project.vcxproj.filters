@@ -298,9 +298,6 @@
     <ClInclude Include="..\src\Models\Player.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Models\Direction.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Controllers\Camera.h">
       <Filter>Header Files\Controllers</Filter>
     </ClInclude>

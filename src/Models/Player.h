@@ -2,7 +2,6 @@
 #define MODEL_PLAYER_H_INCLUDED
 
 #include "Bubble.h"
-#include "Direction.h"
 
 namespace Model {
 
